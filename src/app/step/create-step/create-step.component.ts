@@ -70,9 +70,12 @@ export class CreateStepComponent  {
         if(data.success){
           this.areas = this.areas.concat(data.items as Array<Area>);
         }
+        else{
+          // emit info message dialog
+        }
       },
       error:(err)=>{
-
+          // emit error dialog message;
       }
     })
   }
