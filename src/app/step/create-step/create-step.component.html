@@ -1,0 +1,60 @@
+<ng-template #createStepModal let-modal>
+
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">
+                <div class="pagetitle">
+                    <h3>CREAR ETAPAS</h3>
+                </div>
+                <div class="">
+                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <div formArrayName="rows">
+                        <div  *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+
+                            <div class="mb-4 col-3 form-group">
+                                <label class="form-label">Etapa</label>
+                                <div>
+                                <input formControlName="referenceName" class="form-control form-control-sm" type="text">
+                                </div>
+                            </div>
+
+                            <div class="mb-4 col-3 form-group">
+                                <label class="form-label">Sla (hours)</label>
+                                <div>
+                                <input formControlName="sla" class="form-control form-control-sm" type="text">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4 col-3 form-group">
+                                <label class="form-label">Area</label>
+                                <div>
+                                    <select formControlName="area" class="form-control form-control-sm">
+                                        <option value="0">Seleccionar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-2 offset-1" style="top: 30%; position: relative;">
+                                <a (click)="createRow()" style="margin-right: 8px;" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i></a>
+                                <a *ngIf="this.rows.length > 1" (click)="removeRow(i)" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-light" (click)="modal.close('Close click')">CERRAR</button>
+                            <button  type="submit" class="btn btn-sm btn-success" (click)="saveSteps()">GUARDAR</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>

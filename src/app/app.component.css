@@ -1,0 +1,5 @@
+.custom-divider {
+    border-right: 1px solid #ccc; /* Set your desired line color and style */
+    padding-right: 25px; /* Add some padding to separate content from the line */
+    height: 100vh;
+  }

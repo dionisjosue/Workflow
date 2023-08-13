@@ -1,0 +1,14 @@
+.float-end button{
+  margin-right: 10px;
+  margin-top: 4px;
+}
+.custom-btn :hover{
+    background-color: #154455;
+    color: white;
+}
+.hideTable{
+  display: none;
+}
+.showTable{
+  display: block;
+}
