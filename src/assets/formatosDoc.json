@@ -1,0 +1,173 @@
+{
+  "extensions": [
+    {
+      "name": "jpg",
+      "id": 1
+    },
+    {
+      "name": "jpeg",
+      "id": 2
+    },
+    {
+      "name": "png",
+      "id": 3
+    },
+    {
+      "name": "gif",
+      "id": 4
+    },
+    {
+      "name": "bmp",
+      "id": 5
+    },
+    {
+      "name": "svg",
+      "id": 6
+    },
+    {
+      "name": "pdf",
+      "id": 7
+    },
+    {
+      "name": "doc",
+      "id": 8
+    },
+    {
+      "name": "docx",
+      "id": 9
+    },
+    {
+      "name": "ppt",
+      "id": 10
+    },
+    {
+      "name": "pptx",
+      "id": 11
+    },
+    {
+      "name": "xls",
+      "id": 12
+    },
+    {
+      "name": "xlsx",
+      "id": 13
+    },
+    {
+      "name": "txt",
+      "id": 14
+    },
+    {
+      "name": "rtf",
+      "id": 15
+    },
+    {
+      "name": "csv",
+      "id": 16
+    },
+    {
+      "name": "mp3",
+      "id": 17
+    },
+    {
+      "name": "wav",
+      "id": 18
+    },
+    {
+      "name": "ogg",
+      "id": 19
+    },
+    {
+      "name": "flac",
+      "id": 20
+    },
+    {
+      "name": "mp4",
+      "id": 21
+    },
+    {
+      "name": "mov",
+      "id": 22
+    },
+    {
+      "name": "avi",
+      "id": 23
+    },
+    {
+      "name": "mkv",
+      "id": 24
+    },
+    {
+      "name": "webm",
+      "id": 25
+    },
+    {
+      "name": "zip",
+      "id": 26
+    },
+    {
+      "name": "rar",
+      "id": 27
+    },
+    {
+      "name": "tar",
+      "id": 28
+    },
+    {
+      "name": "gz",
+      "id": 29
+    },
+    {
+      "name": "html",
+      "id": 30
+    },
+    {
+      "name": "css",
+      "id": 31
+    },
+    {
+      "name": "js",
+      "id": 32
+    },
+    {
+      "name": "ts",
+      "id": 33
+    },
+    {
+      "name": "py",
+      "id": 34
+    },
+    {
+      "name": "java",
+      "id": 35
+    },
+    {
+      "name": "cpp",
+      "id": 36
+    },
+    {
+      "name": "json",
+      "id": 37
+    },
+    {
+      "name": "xml",
+      "id": 38
+    },
+    {
+      "name": "sql",
+      "id": 39
+    },
+    {
+      "name": "ppt",
+      "id": 40
+    },
+    {
+      "name": "TODOS",
+      "id": 41
+    }
+  ]
+}
+
+
+
+
+

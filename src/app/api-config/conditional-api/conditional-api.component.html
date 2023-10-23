@@ -1,0 +1,148 @@
+<ng-template #conditional let-modal>
+
+    
+
+    <div class="modal-header">
+        <div class="modal-title">
+            <h3>{{api.name}} | {{form?.get('referenceName')?.value}}</h3>
+        </div>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="row">
+            <label class="alert alert-danger" *ngIf="false">
+                <span ngbTooltip="VER DETALLES" 
+                    class="material-icons" >
+                    error
+                </span>
+                ERROR
+            </label>
+        </div>
+
+        <div class="col-auto float-end">
+            <a (click)="addCond()" ngbTooltip="Nueva condicional" class="btn btn-sm btn-success" style="margin-left: 10px;">
+                <span class="material-icons">add</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <app-list-menu  (onSelect)="selectedConditional($event)"></app-list-menu>
+        </div>
+
+    
+    <form [formGroup]="form">
+        <div class="row">
+
+            <div class="col-6 form-group mb-6">
+                <label class="form-label">Nombre</label>
+                <div>
+                    <input formControlName="name" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6 form-group mb-6">
+                <label class="form-label">API A LLAMAR</label>
+                <div>
+                    <input [disabled]="true" formControlName="apiName" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-3 form-group">
+                <label class="form-label">Evento</label>
+                <div>
+                    <select class="form-control" formControlName="stepEvent">
+                        <option value="-1" selected>Seleccionar</option>
+                        <option value="0" >TODOS</option>
+                        <option value="7">Al avanzar etapa</option>
+                        <option value="8">Al cargar etapa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-9 form-group">
+                <label class="form-label">Etapas</label>
+                <div>
+                    <ng-select formControlName="steps" [multiple]="true"  (change)="addStep($event)" 
+                    [items]="steps" bindLabel="name" bindValue="id"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-3 form-group">
+                <label class="form-label">Evento</label>
+                <div>
+                    <select class="form-control" formControlName="formEvent">
+                        <option value="-1" selected>Seleccionar</option>
+                        <option value="0" selected>TODOS</option>
+                        <option value="1">Al abrir formulario</option>
+                        <option value="2">Al guardar formulario</option>
+                        <option value="3">Al cerrar formulario</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-9 form-group">
+                <label class="form-label">Formularios</label>
+                <div>
+                    <ng-select formControlName="forms" [multiple]="true" (change)="addForm($event)" 
+                    bindLabel="title" bindValue="id" [items]="formularios"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-3 form-group">
+                <label class="form-label">Evento</label>
+                <div>
+                    <select class="form-control" formControlName="fieldEvent">
+                        <option value="-1" selected>Seleccionar</option>
+                        <option value="0" selected>TODOS</option>
+                        <option value="4">Al enfocar el campo</option>
+                        <option value="5">Al editar el campo</option>
+                        <option value="6">Al desenfocar el campo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-9 form-group">
+                <label class="form-label">Campos</label>
+                <div>
+                    <ng-select formControlName="fields" (change)="addField($event)" [items]="fields" 
+                    bindLabel="name" bindValue="id"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-3 form-group">
+                <label class="form-label">Evento</label>
+                <div>
+                    <select formControlName="flowEvent" class="form-control">
+                        <option value="-1" selected>Seleccionar</option>
+                        <option value="0" selected>TODOS</option>
+                        <option value="9">Al cerrar flujo</option>
+                        <option value="10">Al crear flujo</option>
+                        <option value="11">Al cancelar flujo</option>
+                        <option value="12">Al resolver flujo</option>
+                        <option value="13">Al reabrir flujo</option>
+                        <option value="14">Al reasignar flujo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-9 form-group">
+                <label class="form-label">Tipos de Flujos</label>
+
+                <div>
+                    <ng-select formControlName="flows" (change)="addFlow($event)" [items]="flows" bindLabel="flowName" 
+                    bindValue="id"></ng-select>
+                </div>
+            </div>
+          <app-conditional-field [form]="getChildForm" [fields]="fields" [conditionals]="getConditional"></app-conditional-field>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-success btn-sm" (click)="saveData()">
+                <span class="material-icons" style="font-size: 14px;">save</span>
+                GUARDAR
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="closeModal()">
+                <span class="material-icons"  style="font-size: 14px;" >close</span>
+                CERRAR
+            </button>
+
+        </div>
+    </form>
+</div>
+
+    
+</ng-template>

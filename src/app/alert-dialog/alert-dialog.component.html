@@ -1,0 +1,19 @@
+<ng-template  #alertDialog let-modal>
+
+  <div class="modal-header">
+    <div class="modal-title">
+        <h3>{{inputs.title}}</h3>
+    </div>
+    <div class="col-1 offset-3">
+        <button (click)="onClose()" type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+  </div>
+
+      <div class="modal-body">
+          {{inputs.message}}
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="onClose()" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+</ng-template>

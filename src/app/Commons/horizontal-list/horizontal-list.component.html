@@ -1,0 +1,27 @@
+<div class="item-container" cdkDropList   (cdkDropListDropped)="onDrop($event)" >
+    <div class="item"  *ngFor="let item of items;let i =index" cdkDrag>
+      <div class="card" cdkDrag >
+        <div class="row" style="margin: 0;padding: 0;">
+         
+            <div class="col-12"  style="padding: 0;margin: 0;" cdkDrag>
+              <p class="text">{{i+1}}. {{ item.name }}</p>
+            </div>
+        </div>
+        <div class="row" style="padding: 0;margin: 0;">
+          <div class="col-2 offset-1" style="padding: 0;margin: 0;">
+            <button class="btn btn-sm maximize-icon" (click)="maximize(item)"
+            style="padding-top: 0;margin-top: 0; padding-left: 2px; padding-right: 2px;">
+              <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+            </button>
+          </div>
+          <div class="col-2" style="padding-top: 0;margin-top: 0;">
+          <button style="padding-top: 0;margin-top: 0;" class="btn btn-sm delete-icon"  (click)="deleteItem(item)">
+            <i class="fa-regular fa-square-minus"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    </div>
+</div>
+  

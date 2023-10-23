@@ -1,25 +1,32 @@
 <ng-template #createStepModal let-modal>
 
-    <div class="modal">
         <div class="modal-header">
             <div class="modal-title">
-                <div class="pagetitle">
-                    <h3>CREAR ETAPAS</h3>
-                </div>
-                <div class="">
-                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-                </div>
+                <h3>CREAR ETAPAS</h3>
             </div>
+            <div class="col-1 offset-7">
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+        </div>
 
             <div class="modal-body">
                 <form [formGroup]="form">
-                    <div formArrayName="rows">
-                        <div  *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+                    <div  formArrayName="rows">
+                        <div class="row"  *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
 
+                            <ngb-alert style="color: black;" *ngIf="alert.index == i && alert.show" 
+                            [type]="alert.type" >{{alert.message}}
+                                <button *ngIf="alert.shwBtn" (click)="saveArea(i)" class="btn btn-success btn-sm">
+                                    <i class="fa-regular fa-square-check"></i>
+                                </button>
+                                <button style="margin-left: 5px;" *ngIf="alert.shwBtn" (click)="closeAlert(i)" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-x"></i>
+                                </button>
+                            </ngb-alert>
                             <div class="mb-4 col-3 form-group">
                                 <label class="form-label">Etapa</label>
                                 <div>
-                                <input formControlName="referenceName" class="form-control form-control-sm" type="text">
+                                    <input formControlName="name" class="form-control form-control-sm" type="text">
                                 </div>
                             </div>
 
@@ -32,11 +39,16 @@
                             
                             <div class="mb-4 col-3 form-group">
                                 <label class="form-label">Area</label>
+
                                 <div>
-                                    <select formControlName="area" class="form-control form-control-sm">
-                                        <option value="0">Seleccionar</option>
-                                    </select>
+                                    <ng-select formControlName="areaFk"
+                                    [items]="areas" [selectOnTab]="true" class="custom2"
+                                    [addTag]="true" (change)="checkArea($event,i)"
+                                        bindLabel="name" 
+                                        bindValue="id" >
+                                    </ng-select>
                                 </div>
+                                        
                             </div>
                             
                             <div class="col-md-2 offset-1" style="top: 30%; position: relative;">
@@ -55,6 +67,4 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
 </ng-template>

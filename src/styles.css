@@ -9,8 +9,17 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+@import "~jsoneditor/dist/jsoneditor.min.css";
+
+textarea.jsoneditor-text{min-height:1250px;}
+
 :root {
   scroll-behavior: smooth;
+}
+
+.cardTitles{
+  margin-left: 8px;
 }
 
 body {
@@ -76,6 +85,23 @@ h6 {
   color: #012970;
   margin-top: 10px;
 }
+
+.pagetitle h3 {
+  font-size: 14px;
+  margin-bottom: -10px;
+  font-weight: 500;
+  color: #012970;
+  margin-top: 10px;
+}
+
+.pagetitle h4 {
+  font-size: 12px;
+  margin-bottom: -10px;
+  font-weight: 500;
+  color: #012970;
+  margin-top: 10px;
+}
+
 
 
 

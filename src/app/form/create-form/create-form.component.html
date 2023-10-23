@@ -1,0 +1,223 @@
+
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+  <form [formGroup]="form">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="pagetitle">
+        <div class="col-2">
+          <h2>FORMULARIOS 
+            <a class="btn btn-sm btn-link"><i class="fa-solid "></i></a>
+          </h2>
+        </div>
+        <br/>
+      </div>
+
+
+      <div class="row">
+        <div class="mb-4 col-4 form-group">
+            <label class="form-label">Nombre</label>
+            <div>
+              <input formControlName="title" class="form-control form-control-sm" type="text">
+            </div>
+        </div>
+
+        <div class="mb-8 col-8 form-group">
+            <label class="form-label">Descripcion</label>
+            <div>
+              <input formControlName="description"  class="form-control form-control-sm" type="text">
+            </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Etapas</label>
+          <ng-select formControlName="formSteps" draggable="true"
+          [selectOnTab]="true" [items]="steps"
+         [addTag]="true" [multiple]="true"
+             bindLabel="name" 
+             bindValue="id" >
+         </ng-select>
+        </div>
+        <div class="col-12" style="margin-top: 20px;" *ngIf="formFields.length > 0">
+          <label class="form-label">Secciones</label>
+          <span class="textarea-span">
+            <app-horizontal-list [items]="formFields" (onMaximize)="itemSelected($event)"></app-horizontal-list>
+          </span>
+        </div>
+
+      </div>
+
+      <br>
+      <div class="modal-footer">
+        <a routerLink="../" style="margin-right: 10px;" type="button" class="btn btn-link btn-sm rounded-pill" data-bs-dismiss="modal" >Volver Atras</a>
+        <button type="button" class="btn btn-primary btn-sm rounded-pill" (click)="saveForms()">Guardar</button>
+      </div>
+    </div>
+  </div>
+ 
+<div class="card">
+  <div class="card-body">
+
+    <!--
+    <div class="row">
+      <div formArrayName="formFields" class="col-12">
+        <ul>
+          <li *ngFor="let f of getFieldsChecked">
+            <div class="col-2 mb-2 form-group">
+              {{f.name}}
+            </div>
+          </li>
+        </ul>
+
+        <ul>
+          <li *ngFor="let f of rowFields.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+            <div class="col-2 mb-2 form-group">
+                {{f.get('name').value}}
+            </div>
+            <div class="col-2 mb-2 form-group">
+              <label>Requerido
+                <input formControlName="isRequired" type="checkbox"/>
+              </label>
+            </div>
+            <div class="col-2 mb-2 form-group">
+              <label>Solo Lectura
+                <input formControlName="isReadonly" type="checkbox"/>
+              </label>
+            </div>
+            <div class="col-2 mb-2 form-group">
+              <label>Anchura
+                <input formControlName="columnTemplate" type="number" class="form-control form-control-sm"/>
+              </label>
+            </div>
+            
+            <div class="col-2 mb-2 form-group">
+              <a class="btn btn-success btn-sm" >
+                <i class="fa-regular fa-circle-check"></i>
+              </a>
+            </div>
+          </div>
+
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  -->
+
+        <div class="pagetitle">
+          <div class="row">
+            <div class="col-2">
+              <h3>SECCIONES 
+                <a class="btn btn-sm btn-link"><i class="fa-solid "></i></a>
+              </h3>
+            </div>
+
+            <div class="col-6 offset-1">
+                <h3>CAMPOS 
+                  <a class="btn btn-sm btn-link"><i class="fa-solid "></i></a>
+                </h3>
+            </div>
+            
+          </div>
+        </div>
+
+   
+        <div class="row" >
+            <div class="mb-3 col-3 form-group">
+                <label class="form-label">Nombre</label>
+              
+                  <div>
+                    <app-ng-select-generic
+                    name="Seccion" (change)="addSection($event,0)"
+                    (save)="dataSaved($event,0)"
+                    (change)="dataSaved($event,0)"
+                     #moduleSelect  [dataService]="secSv"
+                    controlName="sectionFk" label="name" bind="id"
+                    [form]="form"
+                    [params]="null">
+                    </app-ng-select-generic>
+                  </div>
+               
+          
+            </div>
+
+          
+            <div class="mb-9 col-9 form-group">
+                <label class="form-label">Campos</label>
+                <div class="row" >
+
+            
+                  <div class="col-11">
+                    <ng-select  formControlName="fieldFk"
+                     [selectOnTab]="true" (add)="addField($event)"
+                     (remove)="removeField($event)" [items]="fields"
+                     (clear)="removeAll($event)"
+                    [addTag]="true" [multiple]="true"
+                        bindLabel="name" 
+                        bindValue="id" >
+                    </ng-select>
+                  </div>
+
+            
+               
+                </div>
+                
+            
+            </div>
+
+            <div class="col-12">
+              <br>
+            <div class="table-responsive">
+                <table id="datatable" #datatable datatable [dtOptions]="opt" [dtTrigger]="trigger"  class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Campo</th>
+                      <th>Tipo</th>
+                      <th>Valor por Defecto</th>
+                      <th>Valor Max.</th>
+                      <th>Valor Min.</th>
+                      <th>Es Requerido</th>
+                      <th>Solo Lectura</th>
+                      <th>Longitud</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="formFields" cdkDropList  (cdkDropListDropped)="onDrop($event)">
+                    <tr *ngFor="let f of rowFields.controls; let i = index;" [formGroupName]="i" 
+                    cdkDrag>
+                      <td  ngbTooltip="Drag to reorder">
+                        {{i+1}}
+                        <i class="fa-solid fa-grip-vertical"></i>
+                      </td>
+                      <td>{{f.get('name').value}}</td>
+                      <td>{{f.get('type').value}}</td>
+                      <td>{{f.get('defaultValue').value}}</td>
+                      <td>{{f.get('maxValue').value ?? "N/A"}}</td>
+                      <td>{{f.get('minValue').value ?? "N/A"}}</td>
+                      <td><input formControlName="isRequired" type="checkbox"></td>
+                      <td><input formControlName="isReadonly" type="checkbox"></td>
+                      <td><input formControlName="columnTemplate" type="number" class="form-control form-control-sm"></td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="offset-10 float-end" style="margin-right: 10px;margin-top: 10px;">
+              <button class="btn btn-sm btn-success" (click)="saveFieldsOfSection()">
+                <i class="fa-regular fa-square-minus"></i>
+                GUARDAR</button>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+<app-alert-dialog #dialog [inputs]="dialogInput" (close)="onCloseAlert($event)"></app-alert-dialog>
+
+</div>

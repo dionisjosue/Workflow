@@ -1,0 +1,6 @@
+#rectangle {
+    background-color: #f0f0f0; /* Set the background color */
+    border: 1px solid #ccc;   /* Add a border */
+    border-radius: 5px;       /* Round the corners */
+    margin-bottom: 12px;
+}

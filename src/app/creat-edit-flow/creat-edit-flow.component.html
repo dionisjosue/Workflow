@@ -23,70 +23,53 @@
               <div>
                 <form [formGroup]="form">
                     <div class="row">
-                        <div class="mb-4 col-6 form-group">
-                            <label class="form-label">Nombre del Flujo</label>
-                            <input formControlName="flowName" class="form-control form-control-sm" type="text"/>
+
+                      <div class="mb-4 col-4 form-group">
+                        <label class="form-label">Modulo</label>
+                        <div>
+                          <app-ng-select-generic
+                          name="Modulo" (change)="filterCategory()"
+                           #moduleSelect (save)="filterCategory()" (close)="closeModule($event)" [dataService]="mdService"
+                          controlName="moduleFk" label="name" bind="id"
+                          [form]="form"
+                          [params]="null">
+                          </app-ng-select-generic>
+                        
                         </div>
-                        <div class="mb-4 col-6 form-group">
-                          <label class="form-label">Producto</label>
-                           <select formControlName="productFk" class="form-control form-control-sm">
-                            <option value="">Seleccionar</option>
-                           </select>
-                       </div>
+                                
+                      </div>
+
+                      <div class="mb-4 col-4 form-group">
+                        <label class="form-label">Categoria</label>
+                        <div>
+                          <app-ng-select-generic #categorySelect 
+                            name="Categoria"
+                            [form]="form"
+                            [callback]="callbackCategory"
+                            (save)="saveProduct($event)" (close)="closeProduct($event)"
+                            [dataService]="svProd"
+                            controlName="productFk" label="name" bind="id"
+                            [params]="null">
+                          </app-ng-select-generic>
+                        
+                        </div>
+                                
+                      </div>
+
+                      <div class="mb-4 col-4 form-group">
+                          <label class="form-label">Nombre del Flujo</label>
+                          <input formControlName="flowName" class="form-control form-control-sm" type="text"/>
+                      </div>
+
+                    
                      <div class="mb-4 col-12 form-group">
                             <label class="form-label">Descripcion</label>
                             <input formControlName="description" class="form-control form-control-sm"/>
                         </div>
 
-                      <div class="row">
-                        <div class="pagetitle">
-                          <div class="col-2">
-                            <h2 (click)="toggle()">ETAPAS
-                              <a  class="btn btn-sm btn-link"><i class="fa-solid " [ngClass]="{'fa-chevron-up':istoggle,'fa-chevron-down':!istoggle}"></i></a>
-                            </h2>
-                          </div>
-                          <br/>
-                        </div>
-
-                        <div formArrayName="rows">
-                          <div class="row fade-in-out" [ngClass]="{'show': istoggle}" *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
-
-                            <div class="mb-4 col-3 form-group">
-                              <label class="form-label">Nombre Etapa en el Flujo</label>
-                              <div>
-                                <input formControlName="referenceName" class="form-control form-control-sm" type="text">
-                              </div>
-                            </div>
-
-                            <div class="mb-4 col-3 form-group">
-                              <label class="form-label">Etapa</label>
-                              <select formControlName="stepFk" class="form-control form-control-sm">
-                                <option value="0">Seleccionar</option>
-                              </select>
-                            </div>
-                            <div class="mb-4 col-3 form-group">
-                              <label class="form-label">Proxima Etapa (Default)</label>
-                              <select formControlName="nextFlowStepFk" class="form-control form-control-sm">
-                                <option value="0">Seleccionar</option>
-                              </select>
-                            </div>
-
-                            <div class="col-md-2 offset-1" style="top: 30%; position: relative;">
-                              <a (click)="createRow(null)" style="margin-right: 8px;" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i></a>
-                              <a *ngIf="this.rows.length > 1" (click)="removeRow(i)" class="btn btn-sm btn-danger">
-                                <i class="fa-solid fa-trash-can"></i>
-                              </a>
-                            </div>
-                        
-                            <div class="mb-4 col-9 form-group">
-                              <label class="form-label">Comentarios</label>
-                              <input formControlName="comments" class="form-control form-control-sm"/>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
                     </div>
                 </form>
+                <app-flow-step [flowSteps]="(Flow.id > 0 ? Flow.flowSteps : [])"></app-flow-step>
               </div>
 
             </div>
@@ -97,4 +80,5 @@
           </div>
     </div>
 
+    <app-alert-dialog #dialog [inputs]="dialogInput" (close)="onCloseAlert($event)"></app-alert-dialog>
 </div>

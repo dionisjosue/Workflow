@@ -1,0 +1,66 @@
+<div class="card">
+
+    <app-detail-api-config #detailApiItm></app-detail-api-config>
+
+    <app-conditional-api #conditionalsApi></app-conditional-api>
+    <div class="card-title" style="margin-left: 10px;margin-right: 10px;">
+        <div class="row">
+            <div class="col-3">
+                <div class="pagetitle">
+                    <h1>API CONFIGURACIONES</h1>
+                </div>
+            </div>
+            <div class="col-9" style="margin-top: 27px;">
+                <div class="float-end">
+                    <a routerLink="/Api/Create" class="btn btn-success btn-sm rounded-pill">
+                        CREAR NUEVO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Url</th>
+                        <th>Tipo</th>
+                        <th>Authenticacion</th>
+                        <th>Descripcion</th>
+                        <th>Query</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let api of apis">
+                        <td>{{api.name}}</td>
+                        <td>{{api.url}}</td>
+                        <td>{{api.httpMethodStr}}</td>
+                        <td>
+                            <a class="btn btn-sm btn-link">
+                                {{api.authTypeStr}}
+                            </a>
+                        </td>
+                        <td>{{api.description}}</td>
+                        <td>{{api.fromQuery ? 'SI' : 'NO'}}</td>
+                        <td>
+                            <button (click)="showConditionals(api)" class="btn btn-sm" ngbTooltip="Condicionales">
+                                <span class="material-icons">settings</span>
+                            </button>
+                            <button (click)="detailApi(api)" class="btn btn-sm" ngbTooltip="Detalles">
+                                <span class="material-icons"></span>
+                                Detalles
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

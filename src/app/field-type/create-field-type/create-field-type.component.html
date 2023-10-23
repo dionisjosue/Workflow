@@ -1,0 +1,58 @@
+<ng-template #createFieldType let-modal>
+
+    <div class="modal-header">
+        <div class="modal-title">
+            <h3>CREAR TIPOS DE CAMPOS</h3>
+        </div>
+        <div class="col-1 offset-7">
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+    </div>
+
+        <div class="modal-body">
+            <form [formGroup]="form">
+                <div  formArrayName="rows">
+                    <div class="row"  *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+
+                        <!--
+                        <ngb-alert style="color: black;" *ngIf="alert.index == i && alert.show" 
+                        [type]="alert.type" >{{alert.message}}
+                            <button *ngIf="alert.shwBtn" (click)="saveFiedlType(i)" class="btn btn-success btn-sm">
+                                <i class="fa-regular fa-square-check"></i>
+                            </button>
+                            <button style="margin-left: 5px;" *ngIf="alert.shwBtn" (click)="closeAlert(i)" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-x"></i>
+                            </button>
+                        </ngb-alert>-->
+                        <div class="mb-4 col-3 form-group">
+                            <label class="form-label">Nombre</label>
+                            <div>
+                                <input formControlName="name" class="form-control form-control-sm" type="text">
+                            </div>
+                            <textarea></textarea>
+                        </div>
+
+                        <div class="mb-4 col-3 form-group">
+                            <label class="form-label">Tipo de Campo</label>
+                            <div>
+                              
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2 offset-1" style="top: 30%; position: relative;">
+                            <a (click)="createRow()" style="margin-right: 8px;" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i></a>
+                            <a *ngIf="this.rows.length > 1" (click)="removeRow(i)" class="btn btn-sm btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-light" (click)="modal.close('Close click')">CERRAR</button>
+                        <button  type="submit" class="btn btn-sm btn-success" (click)="saveFiedlType()">GUARDAR</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+</ng-template>

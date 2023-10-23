@@ -1,12 +1,24 @@
-import { Component, OnInit,AfterViewInit, OnDestroy} from '@angular/core';
-import { Step } from '../step/Classes/Step';
+import { Component, OnInit,AfterViewInit, OnDestroy, Input,ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { FlowStep } from '../flow/Classes/FlowStep';
+import { FlowStep } from '../flow-step/class/FlowStep';
 import { Flow } from '../flow/Classes/Flow';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { FlowFilter } from '../flow/Classes/FlowFilter';
 import { FlowService } from '../flow/Services/flow.service';
+import { Product } from '../product/classes/Product';
+import { ProductService } from '../product/services/product.service';
+import { ModuleService } from '../module/services/module.service';
+import { Module } from '../module/Classes/Module';
+import { ShareDataService } from '../Commons/share-data.service';
+import { callbackResult } from '../Commons/ng-select-generic/callbackResult';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { NgSelectGenericComponent } from '../Commons/ng-select-generic/ng-select-generic.component';
+import { modalInput } from '../alert-dialog/modalInput';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { Alert } from '../Commons/classes/Alert';
+
+
 
 @Component({
   selector: 'app-creat-edit-flow',
@@ -18,18 +30,30 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
   form:FormGroup;
 
   Flow:Flow;
+  flowSteps: Array<FlowStep>;
   flowFk:number;
-  istoggle:boolean;
+  dialogInput:modalInput;
+  @ViewChild('categorySelect')categorySelectC:NgSelectGenericComponent;
+  @ViewChild('dialog')dialog:AlertDialogComponent;
+  private rowDataSubscription: Subscription;
+
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private fb: FormBuilder,private route: ActivatedRoute,
-    private flowRp:FlowService){
-    this.form = this.fb.group({
-      rows:this.fb.array([]),
-      flowName:['',Validators.required],
-      productFk:[0,Validators.required],
-      description:['',null]
-    })
+    private flowRp:FlowService,public svProd:ProductService,
+    private shareService:ShareDataService,
+    public mdService:ModuleService,
+    private nav:Router)
+    {
+      this.dialogInput = new modalInput('','','');
+      this.form = this.fb.group({
+        flowName:['',Validators.required],
+        productFk:[0,Validators.required],
+        description:['',null],
+        moduleFk:[0,Validators.required]
+      })
+     
+    
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -37,9 +61,17 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
   }
   ngAfterViewInit(): void 
   {
-    this.istoggle = true;
-
+    var self = this;
+    this.rowDataSubscription = this.shareService.sharedData$.subscribe((updatedData) => {
+      console.log('Updated Row Data in Parent:', updatedData);
+      if(self.Flow != null && self.Flow != undefined){
+        self.flowSteps = updatedData as Array<FlowStep>;
+        console.log(self.Flow);
+      }
+      // Handle the updated data as needed
+    });
   }
+
   ngOnInit(): void {
     this.route.paramMap
       .pipe(takeUntil(this.destroy$))
@@ -49,17 +81,13 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
         this.getFlow(this.flowFk);
       });
   }
-  addSteps(){
-    this.Flow.flowSteps.forEach(t=> {
-      this.createRow(t);
-    })
-  }
+ 
   getFlow(id:number){
     if(id > 0)
     {
       var ft = new FlowFilter();
       ft.id = id;
-      this.flowRp.getFlows(ft).subscribe(
+      this.flowRp.getData(ft).subscribe(
         {
           next:(data)=>
           {
@@ -68,7 +96,6 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
               if(data.items.length > 0){
                 this.Flow = data.items[0];
                 this.initializeFlow();
-                this.addSteps();
               }
               else
               {
@@ -88,35 +115,60 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
       )
     }
     else{
-      this.createRow(null);
+      this.getFlowModel();
     }
   }
 
+  callbackCategory(data:Product,alert:Alert):callbackResult
+  {
+      var result = new callbackResult(true);
+      var module = this.form.get("moduleFk").value;
+      if(data.moduleFk <= 0 || data.moduleFk == undefined){
+        if(module > 0)
+        {
+          data.moduleFk = module;
+        }
+        else{
+          alert.message = "Seleccionar un modulo es requerido para crear una categoria";
+          alert.show =true;
+          alert.shwBtn = false;
+          result.success = false
+        }
+      }
+      result.alert = alert;
+      result.data = data;
+      return result;
+  }
   get value(){
     return this.form.controls['flowName'].value ?? "NOMBRE DEL FLUJO";
   }
-
-  getFlowSteps():FlowStep[]{
-    var array = this.rows.controls.map((row:FormGroup)=>
-    {
-      return {
-        referenceName: row.get('referenceName').value,
-        comments: row.get('comments').value,
-        stepFk:Number.parseInt(row.get('stepFk').value),
-        nextFlowStepFk:Number.parseInt(row.get('nextFlowStepFk').value),
-        flowFk:Number.parseInt(row.get('flowFk').value),
-        step:null,
-        flow:null
-      }
-    }) as Array<FlowStep>;
-
-    return array;
+  getFlowModel()
+  {
+    this.Flow= this.Flow ?? new Flow();
+    this.Flow = this.form.value;
   }
-  toggle(){
-    this.istoggle = !this.istoggle;
-  } 
   saveFlow(){
-    console.log(this.form.value);
+    this.Flow = this.form.value as Flow;
+    this.Flow.flowSteps = this.flowSteps;
+    let data = new Array<Flow>();
+    data.push(this.Flow);
+
+    this.flowRp.saveData(data).subscribe({
+      next:(data)=>{
+        if(data.success)
+        {
+           this.dialogInput.modalId = "alertId";
+           this.dialogInput.message = "El flujo " +  this.Flow.flowName  +" se ha guardado exitosamente";
+           this.dialogInput.title = "DATOS GUARDADOS!"
+           this.dialog.open();
+        }
+      },
+      error:(err)=>{
+      }
+    });
+  }
+  onCloseAlert(event){
+    this.nav.navigate(['../Flujo']);
   }
   private initializeFlow()
   {
@@ -125,42 +177,31 @@ export class CreatEditFlowComponent implements OnInit,AfterViewInit,OnDestroy{
       productFk: this.Flow.productFk,
       description: this.Flow.description
     };
-
     this.form.patchValue(data)
   }
-  get rows(){
-    return this.form.get('rows') as FormArray;
+  getControl(controlName){
+    return this.form.get(controlName);
   }
-  public createRow(model:FlowStep) 
-  {
-    const rows = this.rows; 
-    this.form.get('rows') as FormArray;
-    if(model== null){
-      var row = this.fb.group({
-        referenceName: ['',Validators.required],
-        comments:['',null],
-        stepFk:[0,Validators.required],
-        nextFlowStepFk:[0,Validators.required],
-        flowFk:[0,null]
-      });
-      rows.push(row, { emitEvent: true });
+  filterCategory(){
+    this.categorySelectC.items = this.categorySelectC.copyList
+    .filter(t=> t.moduleFk == this.getControl("moduleFk").value)
 
+    var ct = this.getControl("productFk");
+    var exists = this.categorySelectC.items.find
+    (t=> t.id == ct.value);
+    if(!exists){
+      ct.setValue(-1);
     }
-    else{
-      var row= this.fb.group({
-        referenceName: [model.referenceName,Validators.required],
-        comments:[model.comments,null],
-        stepFk:[model.stepFk,Validators.required],
-        nextFlowStepFk:[model.nextFlowStepFk,Validators.required],
-        flowFk:[model.flowFk,Validators.required]
-      });
-      rows.push(row, { emitEvent: true });
-    }
+    
   }
-  public removeRow(index){
-    if(this.rows.length > 1)
-      this.rows.removeAt(index);
-  }
+  closeModule(event){
 
+  }
+  saveProduct(event){
+
+  }
+  closeProduct(event){
+
+  }
 
 }

@@ -1,0 +1,4 @@
+<div *ngFor="let item of items">
+    <input [ngModel]="item.name" class="form-control form-control-sm"/>
+    <app-json-props *ngIf="item.children && item.children.length > 0" [items]="item.children"></app-json-props>
+  </div>

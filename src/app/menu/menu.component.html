@@ -113,12 +113,40 @@
           </a>
         </li>
         <li>
-          <a>
-            <i class="fa-regular fa-circle"></i><span>Campos</span>
+          <a [routerLinkActive]="['active']" [routerLink]="'/Api'">
+            <i class="fa-regular fa-circle"></i><span>API</span>
           </a>
         </li>
       </ul>
-    </li><!-- End Components Nav -->
+    </li>
+    <li class="nav-item" appOnClickAddCss [appClickClass]="'collapsed'">
+      <a [routerLinkActive]="['active']" [routerLink]="'/Campo'" class="nav-link collapsed parent" data-bs-target="#components-nav">
+          <span>Documentos</span>
+        <i class="float-end fa-solid fa-chevron-down"></i>
+      </a>
+      <ul id="components-nav" class="nav-content hide" data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLinkActive]="['active']" [routerLink]="'/Campo'">
+            <i class="fa-regular fa-circle"></i><span>Campos</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLinkActive]="['active']" [routerLink]="'/Forms'">
+            <i class="fa-regular fa-circle"></i><span>Formularios</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLinkActive]="['active']" [routerLink]="'/Adjuntos'">
+            <i class="fa-regular fa-circle"></i><span>Documentos Adjuntos</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLinkActive]="['active']" [routerLink]="'/Templates'">
+            <i class="fa-regular fa-circle"></i><span>Documentos Descargables</span>
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </aside>
 

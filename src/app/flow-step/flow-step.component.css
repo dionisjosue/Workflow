@@ -1,0 +1,11 @@
+
+.fade-in-out {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+.fade-in-out.show {
+opacity: 1;
+transition: opacity 0.3s ease-in-out;
+
+}

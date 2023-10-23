@@ -1,0 +1,125 @@
+<div class="card">
+
+    <app-alert-dialog (close)="closeData()" #dialog [inputs]="dialogData" ></app-alert-dialog>
+
+
+    <app-modal-visualizer #visualizer [imageUrl]="imageUrl" [title]="form.get('name')?.value"></app-modal-visualizer>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <form [formGroup]="form">
+                <div class="row">
+                    <div class="col-6">
+                        <br>
+                        <div class="pagetitle">
+                            <h2>DOCUMENTOS DESCARGABLES</h2>
+                        </div>
+                    </div>
+
+                
+                    <div class="col-12">
+                        <div class="col-auto float-end">
+                            <a (click)="addCond()" ngbTooltip="Nuevo Documento" class="btn btn-sm btn-success" style="margin-left: 10px;">
+                                <span class="material-icons">add</span>
+                            </a>
+                        </div>
+                        <div class="col-11">
+                            <app-list-menu (onSelect)="setForm($event)"></app-list-menu>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="float-end">
+                            <input (change)="handleFileUpload($event)" type="file" #fileInput style="display: none;" />
+
+                            <button class="btn btn-success btn-sm" (click)="fileInput.click()">
+                                <span class="material-icons" style="font-size: 14px; margin-top: 3px;">upload_file</span> TEMPLATE (HTML)
+                            </button>
+                            <button (click)="visualize()" class="btn btn-sm btn-secondary" style="margin-left: 8px;">VISUALIZAR</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-3 mb-3 form-group">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control form-control-sm" formControlName="name">
+                    </div>
+                    <div class="col-9 mb-9 form-group">
+                        <label class="form-label">Etapas</label>
+                        <ng-select formControlName="steps" 
+                            [items]="steps" [selectOnTab]="true" [multiple]="true"
+                            bindLabel="name" 
+                            bindValue="id"  >
+                        </ng-select>
+                    </div>
+
+                
+                    <div class="col-6" *ngIf="getFieldsControl.length > 0 ">
+                        <div class="row">
+                            <div class="col-5">
+                                <label>COMODIN</label>
+                            </div>
+                            <div class="col-5">
+                                <label>CAMPO</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="getFieldsControl.length > 0 ">
+                        <div class="row">
+                            <div class="col-5">
+                                <label>COMODIN</label>
+                            </div>
+                            <div class="col-5">
+                                <label>CAMPO</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" formArrayName="fields">
+                        <div class="row">
+                            <div class="col-6" *ngFor="let com of getFieldsControl.controls;let i = index;" [formGroupName]="i"
+                            style="margin-bottom: 10px; margin-top: 10px;">
+                                <div class="row" >
+                                    <div class="col-5">
+                                        <input [disabled]="true" class="form-control form-control-sm" readonly 
+                                        [value]="com.get('comodin').value">
+                                    </div>
+                                    <div class="col-5">
+                                        <ng-select (change)="changeComodin(com,$event)" formControlName="fieldFk" bindLabel="name" bindValue="id" [items]="fields">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <br>
+                        <div class="float-end">
+                            <button (click)="saveData()" type="button" class="btn btn-sm btn-success" style="margin-right: 10px;">
+                                <span class="material-icons" style="font-size: 14px; margin-top: 5px;">save</span>
+                                GUARDAR
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)="clearForm()">
+                                <span class="material-icons" style="font-size: 14px;margin-top: 5px;">cancel</span>
+                                CANCELAR
+                            </button>
+
+                        </div>
+
+                    </div>
+            
+                </div>  
+
+                    
+
+            </form>
+        
+        </div>
+    </div>
+
+</div>

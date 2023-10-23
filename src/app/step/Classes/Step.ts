@@ -1,4 +1,4 @@
-import { BaseEntity } from "../../Commons/BaseEntity";
+import { BaseEntity } from "../../Commons/classes/BaseEntity";
 import { Area } from "../../area/Area";
 
 export class Step extends BaseEntity<number>{

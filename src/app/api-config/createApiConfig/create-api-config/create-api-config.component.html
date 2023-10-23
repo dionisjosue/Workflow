@@ -1,0 +1,163 @@
+
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="pagetitle">
+        <div class="col-12">
+          <h2>API CONFIGURACIONES
+            <a class="btn btn-sm btn-link"><i class="fa-solid "></i></a>
+          </h2>
+        </div>
+        <br/>
+      </div>
+
+   
+    
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="input-group mb-2 col-2">
+                    <span class="input-group-text col-2" id="basic-addon1">
+                        <select class="form-select form-control form-control-sm col-1">
+                            <option value="0" class="option-green">
+                                GET
+                            </option>
+                            <option value="1">POST</option>
+                            <option value="2">PUT</option>
+                            <option value="3">DELETE</option>
+                        </select>
+                    </span>
+                    <span class="input-group-text col-10">
+                        <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Enter URL or paste the text">
+                    </span>
+                </div>
+
+                <div  style="margin-left: 10px;">
+                    <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button (click)="setItem(1)" [class]="'nav-link w-100 '+ {active:itemSelected == 1}" id="step-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                                    Parametros
+                            </button>
+                        </li>
+                        <li class="nav-item flex-fill">   
+                             <button (click)="setItem(2)" [class]="'nav-link w-100 ' + {active:itemSelected == 2}" id="step-tab" data-bs-toggle="tab" 
+                                data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                                Authenticacion
+                            </button>
+                        </li>
+                        <li class="nav-item flex-fill">
+                            <button (click)="setItem(3)" [class]="'nav-link w-100 '+ {active:itemSelected == 3}" id="step-tab" data-bs-toggle="tab" 
+                            data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                                Headers
+                            </button>
+                            
+                        </li>
+                        <li class="nav-item flex-fill">
+                            <button (click)="setItem(4)" [class]="'nav-link w-100 '+ {active:itemSelected == 4}" id="step-tab" data-bs-toggle="tab" 
+                            data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                                Body
+                            </button>
+                        </li>
+                    </ul>
+                    <br>
+                </div>
+             
+                <div class="row" *ngIf="itemSelected == 1 || itemSelected == 3">
+                    <form>
+                        <div class="table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td >
+                                            <input class="form-control form-control-sm">
+                                        </td>
+                                        <td>
+                                            <input class="form-control form-control-sm">
+                                        </td>
+                                        <td>
+                                            <input class="form-control form-control-sm">
+                                        </td>
+                                        <td *ngIf="">
+                                            <a class="btn btn-sm btn-default">
+                                                <span class="material-icons">delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                         </div>
+                    </form>
+                </div>
+
+                <div class="row" *ngIf="itemSelected == 2">
+                    <form>
+                        
+                    </form>
+                        <div class="row border border-light position-relative">
+                            <div class="col-12">
+                                <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                                    <div class="row col-sm-4 border-end border-light">
+                                        <label for="inputEmail3" class="col-sm-4 col-form-label">Type</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-select"></select>
+                                        </div>
+                                    </div> <!-- Middle left line (30% of the width) -->
+                                    <div class="row col-sm-7">
+                                        <div class="row col-sm-12">
+                                            <div class="col-sm-1"></div>
+                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Key</label>
+                                            <div class="col-sm-7">
+                                                <input class="form-control">
+                                            </div>
+
+                                        </div>
+                                        <div class="row col-sm-12" style="margin-top: 20px;">
+                                            <div class="col-sm-1"></div>
+                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Value</label>
+                                            <div class="col-sm-7">
+                                                <input class="form-control">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                </div>
+
+                <div class="row" *ngIf="itemSelected == 4">
+
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-12"  >
+                                <div class="row" *ngFor="let pro of propertyNames;let i=index">
+                                    <app-json-props></app-json-props>
+                                </div>
+                             
+                            </div>
+                        </div>
+                      
+                    </form>
+
+                    <json-editor   #jsonEditor [options]="editorOptions" [data]="data"></json-editor>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>

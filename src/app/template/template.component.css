@@ -1,0 +1,16 @@
+.img {
+    max-width: 90%;
+    height: auto; /* Maintain aspect ratio */
+  }
+  .modal-body {
+    padding: 0; /* Remove default padding */
+  }
+  
+  .pdf-container {
+    max-height: 500px; /* One page A4 height */
+    overflow-y: auto; /* Add vertical scroll if content exceeds the height */
+  }
+  
+  .fixed-section {
+    position: fixed;
+  }

@@ -1,0 +1,30 @@
+.card{
+    background-color: #ebe7e7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    overflow-wrap: break-word;
+}
+
+.itemSelected{
+    border: 1.5px solid rgb(84, 70, 208);
+    font-weight: 450;
+}
+
+li{
+    background-color: #ffffff;
+    border: 1px solid #514f4f;
+    border-radius: 4px;
+}
+
+#deletebtn{
+    cursor: pointer;
+    
+}
+
+ul{
+    cursor: pointer;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

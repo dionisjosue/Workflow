@@ -1,0 +1,94 @@
+<ng-template #conditional let-modal>
+
+    
+
+        <div class="modal-header">
+            <div class="modal-title">
+                <h3>{{flowStep?.referenceName }} | {{form?.get('referenceName')?.value}}</h3>
+            </div>
+        </div>
+
+        <div class="modal-body">
+
+                <div class="row">
+                    <label class="alert alert-danger" *ngIf="save.isError">
+                        <span ngbTooltip="VER DETALLES" 
+                            class="material-icons" >
+                            error
+                        </span>
+                        ERROR
+                    </label>
+                </div>
+
+                <div class="col-auto float-end">
+                    <a (click)="addCond()" ngbTooltip="Nueva condicional" class="btn btn-sm btn-success" style="margin-left: 10px;">
+                        <span class="material-icons">add</span>
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <app-list-menu (onSelect)="setForm($event)"></app-list-menu>
+                </div>
+
+            
+            <form [formGroup]="form">
+                <div class="row">
+
+                    <div class="col-3 form-group mb-3">
+                        <label class="form-label">Nombre</label>
+                        <div>
+                            <input formControlName="referenceName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3 form-group mb-3">
+                        <label class="form-label">Paso Alterno</label>
+                        <ng-select formControlName="alternateFlowStepFk" 
+                        [items]="steps" [selectOnTab]="true" 
+                        bindLabel="referenceName" 
+                        bindValue="id"  >
+                        </ng-select>
+                    </div>
+                    <div class="col-6 form-group mb-6">
+                        <label class="form-label">Comentario del Evento</label>
+                        <textarea  class="form-control form-control-sm" formControlName="commentResult"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <hr>
+                    <div class="modal-title" style="margin-bottom: 20px;">
+                        <h4>CONDICIONES
+                            <div class="float-end">
+                                <button class="btn btn-secondary btn-sm" *ngIf="conditionals != undefined && conditionals.length > 0">
+                                    <span class="material-icons" style="font-size: 15px;">
+                                        edit
+                                    </span>
+                                    EDITAR
+                                </button>
+                            </div>
+                        </h4>
+                       
+                    </div>
+                    
+
+                </div>
+                <div >
+                    <app-conditional-field  [form]="getForm" [fields]="fields" [conditionals]="getConditional"></app-conditional-field>
+                </div>
+
+
+
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm" (click)="saveData()">
+                        <span class="material-icons" style="font-size: 14px;">save</span>
+                        GUARDAR
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="onClose()">
+                        <span class="material-icons"  style="font-size: 14px;" >close</span>
+                        CERRAR
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+        
+</ng-template>

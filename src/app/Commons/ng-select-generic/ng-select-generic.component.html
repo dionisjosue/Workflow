@@ -1,0 +1,20 @@
+
+<div [formGroup]="form">
+<ngb-alert style="color: black;" *ngIf="alert.show" 
+[type]="alert.type" >{{alert.message}}
+    <button *ngIf="alert.shwBtn" (click)="saveData()" class="btn btn-success btn-sm">
+        <i class="fa-regular fa-square-check"></i>
+    </button>
+    <button style="margin-left: 5px;" *ngIf="alert.shwBtn" (click)="closeAlert()" class="btn btn-danger btn-sm">
+        <i class="fa-solid fa-x"></i>
+    </button>
+</ngb-alert>
+
+
+<ng-select [formControlName]="controlName"
+                              [items]="items" [selectOnTab]="true" [addTag]="true"
+                              (change)="checkChange($event)"
+                                  [bindLabel]="label" 
+                                  [bindValue]="bind" >
+                              </ng-select>
+                            </div>

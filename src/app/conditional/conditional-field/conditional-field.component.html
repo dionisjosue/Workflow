@@ -1,0 +1,69 @@
+<form [formGroup]="form">
+    <div formArrayName="conditionalFields">
+        <div id="rectangle" *ngFor="let row of conditionals.controls; let i = index" [formGroupName]="i">
+
+            <div class="row" style="margin-top: 10px;padding: 0;">
+            <div class="col-auto" style="margin-top: 7px;margin-left: 6px;">
+                <span id="strong" class="text-muted">{{i+1}}.</span>
+            </div>
+            <div class="col-auto" style="margin-top: 7px;">
+                <span class="text-muted">SI</span>
+            </div>
+            <div class="col-3 mb-3 form-group">
+                <ng-select [items]="fields"
+                [selectOnTab]="true" formControlName="fieldFk"
+                bindLabel="name" 
+                bindValue="id" ></ng-select>
+            </div>
+            <div class="col-auto" style="margin-top: 7px;">
+                <span class="text-muted">ES</span>
+            </div>
+            <div class="col-2">
+                <select class="form-control " 
+                formControlName="comparisonSign">
+                    <option value="0">Elegir</option>
+                    <option value="1">Menor Que</option>
+                    <option value="2">Mayor Que</option>
+                    <option value="3">Igual Que</option>
+                    <option value="4">Menor o Igual Que</option>
+                    <option value="5">Mayor o Igual Que</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <!--<label class="form-label">
+                
+                        {{getConditionFieldValue('check',i) ? 'Campo' : 'Valor'}}
+                        
+                    <label ngbTooltip="Campo o Valor Experado"><input formControlName="check" type="checkbox"></label>
+                </label>!-->
+                <ng-select *ngIf="getConditionFieldValue('expectedValue',i).length <= 0" formControlName="fieldToCompareFk"
+                [items]="fields" bindLabel="name" [addTag]="true" (change)="setValue($event,row)"
+                bindValue="id">
+                </ng-select>
+                <input *ngIf="getConditionFieldValue('expectedValue',i).length > 0" class="form-control"
+                formControlName="expectedValue" type="tex">
+            </div>
+
+            <div class="col">
+                <select  formControlName="nextLogicalOperator" class="form-control">
+                    <option value="">NA</option>
+                    <option value="AND">Y (&&)</option>
+                    <option value="OR">OR (||)</option>
+
+                </select>
+            </div>
+
+            <div class="col" >
+                <!--
+                <a (click)="addConditionalField(i)" ngbTooltip="Agregar" class="btn btn-sm btn-success" style="margin-right: 2px;">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+                -->
+                <a *ngIf="conditionals.length > 1" (click)="deleteItem(i)" ngbTooltip="Eliminar" class="btn btn-sm btn-danger" style="margin-right: 0;padding-right: 1;">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>

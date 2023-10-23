@@ -1,0 +1,71 @@
+
+<br>
+<br>
+<br>
+<br>
+<div class="badge">
+        <div class="card">
+          <div class="card-body">
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-1">
+                <div class="pagetitle" >
+                  <h2>CAMPOS</h2>
+                </div>
+              </div>
+              <div class="col-2 offset-9 float-end">
+                <div class="pagetitle" >
+                  <a routerLink="/Campo/Create" class="btn btn-success btn-sm">CREAR</a>
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+          
+
+            
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Identificador</th>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                    <th>Valor por Defecto</th>
+                    <th>Valor Max.</th>
+                    <th>Valor Min.</th>
+                    <th>Longitud Max.</th>
+                    <th>Status</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let field of fields">
+                    <td>{{field.identifier}}</td>
+                    <td>{{field.name}}</td>
+                    <td>{{field.fieldType?.name}}</td>
+                    <td>{{field.defaultValue ?? ""}}</td>
+                    <td>{{field.maxValue ?? "N/A"}}</td>
+                    <td>{{field.minValue ?? "N/A"}}</td>
+                    <td>{{field.maxLength ?? "N/A"}}</td>
+                    <td>{{field.active ? 'Activado' : 'Desactivado'}}</td>
+                    <td>
+                      <button (click)="changeStatus(field)" style="margin-right: 5px;" class="btn btn-sm btn-danger">
+                        <i class="fa-regular fa-trash-can"></i>
+                      </button>
+                      <button class="btn btn-sm btn-link">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                      </button>
+
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+</div>
+<app-alert-dialog #dialog [inputs]="modal" (close)="onCloseAlert($event)"></app-alert-dialog>
