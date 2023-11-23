@@ -1,0 +1,38 @@
+<div class="row" [formGroup]="form">
+    <div class="table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody formArrayName="paramsValue">
+                <tr *ngFor="let row of headersValue.controls; let i = index" [formGroupName]="i">
+                    <td>
+                        <input placeholder="Key" formControlName="name" (change)="addItem(i)"  
+                        class="form-control form-control-sm">
+                    </td>
+                    <td>
+                        <ng-select (change)="addItem(i)" (change)="setValue($event,i)"
+                        [selectOnTab]="true" [items]="fields" 
+                        [addTag]="true" [multiple]="false" 
+                            bindLabel="name" 
+                            bindValue="id" >
+                        </ng-select>
+                    </td>
+                  <!--  <td>
+                        <input formControlName="description" (change)="addItem(i)"  class="form-control form-control-sm">
+                    </td>-->
+                    <td *ngIf="headersValue.controls.length > 1">
+                        <a class="btn btn-sm btn-default" (click)="removeItem(i)">
+                            <span class="material-icons">delete</span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+     </div>
+</div>

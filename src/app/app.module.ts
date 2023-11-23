@@ -48,6 +48,10 @@ import { ConditionalFieldComponent } from './conditional/conditional-field/condi
 import { CreateApiConfigComponent } from './api-config/createApiConfig/create-api-config/create-api-config.component';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 import { JsonPropsComponent } from './api-config/createApiConfig/json-props/json-props.component';
+import { ApiParamComponent } from './api-config/createApiConfig/api-param/api-param.component';
+import { AuthenticationApiComponent } from './api-config/createApiConfig/authentication-api/authentication-api.component';
+import { ApiBodyComponent } from './api-config/createApiConfig/api-body/api-body.component';
+import { ApiHeaderComponent } from './api-config/createApiConfig/api-header/api-header.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +88,11 @@ import { JsonPropsComponent } from './api-config/createApiConfig/json-props/json
     ConditionalApiComponent,
     ConditionalFieldComponent,
     CreateApiConfigComponent,
-    JsonPropsComponent
+    JsonPropsComponent,
+    ApiParamComponent,
+    AuthenticationApiComponent,
+    ApiBodyComponent,
+    ApiHeaderComponent
   ],
   imports: [
     BrowserModule,

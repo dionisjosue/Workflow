@@ -5,8 +5,8 @@ import { apiConfiguration } from "./apiConfiguration";
 export class apiParams extends BaseEntity<number>{
 
     name:string;
-    value:string;
-    fieldFk:number;
+    value?:string;
+    fieldFk?:number;
     field:Field;
     apiConfigurationFk:number;
     apiConfiguration:apiConfiguration;

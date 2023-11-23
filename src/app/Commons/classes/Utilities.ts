@@ -81,19 +81,24 @@ export class Utilities
     }
     static extractNodes(data: any): jsonProps[] 
     {
+        console.log(data);
         if (Array.isArray(data)) 
         {
-          return data.map(item => {
+          return data.map(item => 
+          {
+            console.log(item);
             const { name, ...rest } = item;
             //console.log(name);
             //console.log(rest);
             return {
               name,
               children: Object.keys(rest).length ? this.extractNodes(Object.values(rest)[0]) : [],
-              idx:0
+              idx:0,
+              propName:Object.keys(item)[0]
             };
           });
-        } else if (typeof data === 'object') {
+        } else if (typeof data === 'object') 
+        {
           return [{
             name: Object.keys(data)[0],
             children: Object.values(data).length ? this.extractNodes(Object.values(data)[0]) : [],

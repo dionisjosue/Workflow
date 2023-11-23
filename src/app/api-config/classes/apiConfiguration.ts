@@ -18,4 +18,9 @@ export class apiConfiguration extends BaseEntity<number>{
     apiConditionals:Array<apiConditionals>;
     httpMethodStr:string;
     authTypeStr:string;
+
+    constructor(){
+        super();
+        //this.paramsValue = new arr
+    }
 }

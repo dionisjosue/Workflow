@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ApiConfigServices } from '../../services/api-config.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
@@ -7,46 +7,41 @@ import { Field } from 'src/app/field/classes/Field';
 import { FieldService } from 'src/app/field/services/field.service';
 import { Utilities } from 'src/app/Commons/classes/Utilities';
 import { jsonProps } from '../../classes/jsonProps';
+import { PropertyInfo } from '../PropertyInfo';
+import { ShareDataService } from 'src/app/Commons/share-data.service';
+import { ShareDataComplexService } from '../services/share-data-complex.service';
+import { ApiConfigComponent } from '../../read/api-config.component';
+import { apiConfiguration } from '../../classes/apiConfiguration';
+import { apiParams } from '../../classes/apiParams';
+import { Subscription } from 'rxjs';
+import { headerParams } from '../../classes/headerParams';
+
+
+
 
 @Component({
   selector: 'app-create-api-config',
   templateUrl: './create-api-config.component.html',
   styleUrls: ['./create-api-config.component.css']
 })
-export class CreateApiConfigComponent implements OnInit{
+export class CreateApiConfigComponent implements OnInit,OnDestroy{
 
   form:FormGroup;
   itemSelected:number;
-  editorOptions:JsonEditorOptions;
-  data:any;
+ 
+  apiConfig:apiConfiguration;
   fields:Array<Field>;
   selectedItem: any;
   @ViewChild('jsonEditor') jsonEditorContainer: JsonEditorComponent;
-  propertyNames:jsonProps[]
   lastId:number;
+  apiParamSubscription:Subscription;
+  headerParamSubscription:Subscription;
 
   constructor(private apiConfSv:ApiConfigServices,
-    private fb:FormBuilder,private fdSv:FieldService)
+    private fb:FormBuilder,private fdSv:FieldService,
+    private shData:ShareDataComplexService)
   {
-    this.getFields();
-
-    this.editorOptions = new JsonEditorOptions()
-    this.editorOptions.ajv =  { 
-      allErrors: true, 
-      verbose: true,
-      jsonPointers: false,
-      $data: true
-    };
-    this.editorOptions.modes = ['code', 'text', 'tree', 'view','form']; // set all allowed modes
-    this.editorOptions.mode = 'code'; //set only one mode
-    this.data = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]}
-    this.propertyNames = Utilities.extractNodes(this.data);
-    console.log(this.propertyNames)
-    //this.propertyNames = Utilities.setParentId(this.propertyNames);
-    //let propertyNames = Utilities.groupBy(this.propertyNames,'parentId');
-    //console.log(propertyNames);
-
-    console.log(this.propertyNames);
+    this.apiConfig = new apiConfiguration();
     this.form = fb.group({
       name:['',Validators.required],
       url:['',Validators.required],
@@ -61,27 +56,22 @@ export class CreateApiConfigComponent implements OnInit{
       apiConditionals:fb.array([])
     })
   }
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.apiParamSubscription.unsubscribe();
+    this.headerParamSubscription.unsubscribe();
   }
-  onNgSelectChange(event) 
-  {
-    // Update JSONEditor content based on the selected item
-    if (this.selectedItem) {
-      const selectedJson = this.selectedItem.jsonData; // Assuming your ng-select options have a 'jsonData' property
-      this.jsonEditorContainer.set(selectedJson);
-    } else {
-      // Handle the case when no item is selected
-    }
+  ngOnInit(): void {
+    this.getFields();
+    this.apiParamSubscription = this.shData.getDataObservable("apiParams").subscribe(data=>{
+        this.apiConfig.paramsValue = data as Array<apiParams>;
+    });
+    this.headerParamSubscription = this.shData.getDataObservable("headerParams").subscribe(data=>{
+      this.apiConfig.paramsValue = data as Array<headerParams>;
+    })
   }
 
   setItem(val){
     this.itemSelected = val;
-    if(val == 4){
-      setTimeout(function(){ $(".jsoneditor-poweredBy").remove()},100);
-
-    }
-    console.log(this.fields)
-
   }
 
   getFields(){
@@ -90,7 +80,6 @@ export class CreateApiConfigComponent implements OnInit{
         console.log(data);
         if(data.success){
           this.fields = data.items as Array<Field>;
-          console.log(this.fields)
         }
       },
       error:(err)=>{
