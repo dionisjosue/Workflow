@@ -1,0 +1,59 @@
+<ng-template #detailApiModal class="modal-body" let-modal>
+
+    <div class="modal-header">
+        <span class="input-group-text col-12">
+            <span class="col-2">
+                 <span class="float-start">{{currentItem?.name ?? '' |uppercase}}</span>
+            </span>
+            <span class="col-9">
+                <span class="float-end">
+                    {{currentItem?.url ?? ''}}
+                </span>
+            </span>
+            <div class="col-1 float-end">
+                <button  (click)="onCloseModal()" type="button" class="btn-close float-end" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+
+        </span>
+       
+    </div>
+
+    <div>
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+                <a (click)="setItem(1)" [routerLinkActive]="['active']"   [class]="'nav-link w-100 '" id="step-tab" data-bs-toggle="tab" 
+                        data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                        Parametros
+                </a>
+            </li>
+            <li class="nav-item flex-fill">   
+                 <a (click)="setItem(2)"  [routerLinkActive]="['active']" routerLink="auth" [class]="'nav-link w-100 '" id="step-tab" data-bs-toggle="tab" 
+                    data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                    Authenticacion
+                </a>
+            </li>
+            <li class="nav-item flex-fill">
+                <a (click)="setItem(3)"  [routerLinkActive]="['active']" routerLink="headers" [class]="'nav-link w-100 '" id="step-tab" data-bs-toggle="tab" 
+                data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                    Headers
+            </a>
+            </li>
+            <li class="nav-item flex-fill">
+                <a (click)="setItem(4)"  [routerLinkActive]="['active']" routerLink="body"   [class]="'nav-link w-100 '" id="step-tab" data-bs-toggle="tab" 
+                data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home">
+                    Body
+                </a>
+            </li>
+        </ul>
+        <br>
+
+        <div style="margin-left: 20px;">
+            <app-api-param *ngIf="currentOpt == 1"></app-api-param>
+            <app-authentication-api *ngIf="currentOpt == 2"></app-authentication-api>
+            <app-api-header *ngIf="currentOpt == 3"></app-api-header>
+            <app-api-body *ngIf="currentOpt == 4" ></app-api-body>
+    
+        </div>
+  
+    </div>
+</ng-template>

@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '../classes/Product';
+import { dataServiceInterface } from '@share/services/dataServiceInterface';
 import { Observable } from 'rxjs';
-import { dataServiceInterface } from 'src/app/Commons/dataServiceInterface';
-import { GenericResponse } from 'src/app/Commons/classes/GenericResponse';
-import { Constants } from 'src/app/Commons/classes/Constants';
-import { Utilities } from 'src/app/Commons/classes/Utilities';
+import { Product } from '../classes/Product';
+import { GenericResponse } from '@share/classes/GenericResponse';
+import { Constants } from '@share/classes/Constants';
+import { Utilities } from '@share/Utilities';
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,92 @@
+
+
+
+<app-title-page [titltBtn]="'VOLVER ATRAS'" [route]="'/flow'" [title]="'CREAR FLUJOS'"></app-title-page>
+
+<div>
+
+    <div class="card">
+        
+            
+      <div class="row" style="margin-top: 50px;">
+          <div class="col-3">
+              <div class="pagetitle">
+                  <h1></h1>
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="pagetitle">
+              <h2 >{{value}}</h2>
+            </div>
+            <div class="modal-body">
+             
+              <br>
+              <div>
+                <form [formGroup]="form">
+                    <div class="row">
+
+                      <div class="mb-4 col-4 form-group">
+                        <label class="form-label">Modulo</label>
+                        <div>
+                          <app-ng-select-generic
+                          name="Modulo" (change)="filterCategory()"
+                           #moduleSelect (save)="filterCategory()" (close)="closeModule($event)" 
+                           [dataService]="mdService"
+                          controlName="moduleFk" label="name" bind="id"
+                          [form]="form"
+                          [params]="null">
+                          </app-ng-select-generic>
+                        
+                        </div>
+                                
+                      </div>
+
+                      <div class="mb-4 col-4 form-group">
+                        <label class="form-label">Categoria</label>
+                        <div>
+                          <app-ng-select-generic #categorySelect 
+                            name="Categoria"
+                            [form]="form"
+                            [callback]="callbackCategory"
+                            (save)="saveProduct($event)" (close)="closeProduct($event)"
+                            [dataService]="svProd"
+                            controlName="productFk" label="name" bind="id"
+                            [params]="null">
+                          </app-ng-select-generic>
+                        
+                        </div>
+                                
+                      </div>
+
+                      <div class="mb-4 col-4 form-group">
+                          <label class="form-label">Nombre del Flujo</label>
+                          <input formControlName="flowName" class="form-control form-control-sm" type="text"/>
+                      </div>
+
+                    
+                     <div class="mb-4 col-12 form-group">
+                            <label class="form-label">Descripcion</label>
+                            <input formControlName="description" class="form-control form-control-sm"/>
+                        </div>
+
+                    </div>
+                </form>
+                <app-flow-step [flowSteps]="(Flow.id > 0 ? Flow.flowSteps : [])"></app-flow-step>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <a routerLink="../" style="margin-right: 10px;" type="button" class="btn btn-link btn-sm rounded-pill" data-bs-dismiss="modal" >Volver Atras</a>
+              <button type="button" class="btn btn-primary btn-sm rounded-pill" (click)="saveFlow()">Guardar</button>
+            </div>
+          </div>
+    </div>
+
+    <app-alert-dialog #dialog [inputs]="dialogInput" (close)="onCloseAlert($event)"></app-alert-dialog>
+</div>

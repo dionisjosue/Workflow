@@ -1,0 +1,74 @@
+<form [formGroup]="formAuth">
+    <div class="row" >
+            <div class="row   position-relative">
+                <div class="col-12">
+                    <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                        <div class="row col-sm-4 border-end border-light">
+                            <label class="col-sm-4 col-form-label">Tipo</label>
+                            <div class="col-sm-8">
+                                <select formControlName="authType" class="form-select">
+                                    <option selected value="0">No Auth</option>
+                                    <option value="1">JWT</option>
+                                    <option value="2">Basic Auth</option>
+                                    <option value="3">Api Key</option>
+                                </select>
+                            </div>
+                        </div> <!-- Middle left line (30% of the width) -->
+                        <div class="row col-sm-8" *ngIf="authType.value == 3">
+                            <div class="row col-sm-12">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-4 col-form-label">Key</label>
+                                <div class="col-sm-7">
+                                    <input formControlName="key" class="form-control">
+                                    <app-error-message [control]="key" controlName="key"></app-error-message>
+                                </div>
+
+                            </div>
+                            <div class="row col-sm-12" style="margin-top: 20px;">
+                                <div class="col-sm-1"></div>
+                                <label  class="col-sm-4 col-form-label">Value</label>
+                                <div class="col-sm-7">
+                                    <input formControlName="apiKeyValue" class="form-control">
+                                    <app-error-message [control]="apiKeyValue" controlName="Value"></app-error-message>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-sm-8" *ngIf="authType.value == 1">
+                                    
+                            <div class="col-1"></div>
+                            <label class="col-3 col-form-label">Token</label>
+                            <div class="col-8">
+                                <input formControlName="token" class="form-control"/>
+                                <app-error-message [control]="token" controlName="token"></app-error-message>
+
+                            </div>
+                        </div>
+                        <div class="row col-sm-8" *ngIf="authType.value == 2">
+                                    
+                            <div class="col-1"></div>
+                            <label class="col-3 col-form-label">Usuario</label>
+                            <div class="col-8">
+                                <input formControlName="username" class="form-control"/>
+                                <app-error-message [control]="username" controlName="username"></app-error-message>
+
+                            </div>
+
+                            <div class="col-1"></div>
+                            <label class="col-3 col-form-label" style="margin-top: 10px;">Contrasena</label>
+                            <div class="col-8" style="margin-top: 10px;">
+                                <input formControlName="password" type="password" class="form-control"/>
+                                <app-error-message [control]="password" controlName="password"></app-error-message>
+
+                            </div>
+
+
+                               
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>  
+    </div>
+</form>

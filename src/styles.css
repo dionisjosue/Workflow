@@ -12,11 +12,30 @@
 
 @import "~jsoneditor/dist/jsoneditor.min.css";
 
-textarea.jsoneditor-text{min-height:1250px;}
+
+.ace_editor.ace-jsoneditor {
+  min-height: 650px; /* Set a maximum height */
+  height: auto !important; /* Set height to auto to adjust based on content */
+}
+
 
 :root {
   scroll-behavior: smooth;
 }
+
+.vertical-align-container {
+  display: flex;
+  align-items: center; /* Align items vertically at the center */
+  /* or use justify-content: center; for centering along the main axis */
+  height: 100vh; /* Adjust the height as needed */
+}
+
+/* Additional styling for demonstration purposes */
+.vertical-align-container div {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
 
 .cardTitles{
   margin-left: 8px;

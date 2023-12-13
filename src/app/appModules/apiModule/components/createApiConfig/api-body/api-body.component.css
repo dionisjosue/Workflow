@@ -1,0 +1,8 @@
+label{
+    display: inline-block;
+    padding: 0.3rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }

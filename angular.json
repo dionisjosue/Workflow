@@ -31,9 +31,7 @@
               "node_modules/material-icons/css/material-icons.min.css",
               "src/styles.css",
               "@ng-select/ng-select/themes/default.theme.css",
-              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
-              "node_modules/quill/dist/quill.snow.css",
-              "node_modules/quill/dist/quill.bubble.css"
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

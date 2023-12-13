@@ -1,0 +1,96 @@
+
+
+<div>
+
+
+    <div class="card">
+        
+        <app-create-step [areas]="areas" (onSave)="saveStep($event)" #createStepComponent></app-create-step>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-3">
+                <div class="pagetitle">
+                    <h1>ETAPAS</h1>
+                </div>
+            </div>
+            <div class="col-9" style="margin-top: 27px;">
+                <div class="float-end"  style="margin-right: 10px;">
+                    <a (click)="createStep()" class="btn btn-success btn-sm rounded-pill">
+                        CREAR NUEVO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row" >
+        <div class="col-12" *ngFor="let step of steps">
+            <div class="card">
+                <div class="pagetitle">
+                 
+                    <div class="row">
+                        <div class="col-9" *ngIf="!step.editMode; else editModeTmpl">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h3 style="margin-left: 8px;">{{step.name | uppercase}}</h3>
+                                </div>
+                                <div class="col-4" style="margin-top: 12px;">
+                                    <span>SLA: <label>{{step.sla}}</label></span>
+                                </div>
+                                <div class="col-4" style="margin-top: 12px;">
+                                    <a href="#">Area: <label> {{step.area?.name}}</label></a>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template  #editModeTmpl>
+                            <div class="col-9">
+                                <form [formGroup]="form">
+                                    <div class="row">
+                                        <div class="col-4" style="margin-left: 5px;">
+                                            <label class="form-label">Nombre</label>
+                                            <input formControlName="name" class="form-control form-control-sm">
+                                            <app-error-message [control]="name" [controlName]="'Nombre'"></app-error-message>
+                                        </div>
+                                        <div class="col-3" >
+                                            <label class="control-label form-label">Sla</label>
+                                            <input type="number" min="0"  formControlName="sla" class="form-control form-control-sm">
+                                            <app-error-message [control]="sla" [controlName]="'Sla'"></app-error-message>
+
+                                        </div>
+                                        <div class="col-4" >
+                                            <label class="form-label">Area</label>
+                                            <app-ng-select-generic
+                                            name="Area" [items]="areas"
+                                            #areaSelect label="name"
+                                            controlName="areaFk" bind="id"
+                                            [form]="form" [dataService]="svArea"
+                                            (save)="addArea($event)">
+                                            </app-ng-select-generic>
+                                            <span *ngIf=""></span>
+                                            <app-error-message [control]="areafk" [controlName]="'Area'"></app-error-message>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </ng-template>
+                       
+                        <div class="col-3">
+                            <div class="float-end" style="margin-top: 8px;">
+                                <button [disabled]="form.invalid && step.editMode" (click)="editModeFn(step)" class="btn btn-sm " [ngClass]="{'btn-success':step.editMode,'btn-link':!step.editMode}">
+                                    <i [ngClass]="{'fa-save':step.editMode,'fa-pencil':!step.editMode}"class="fa-solid "></i>
+                                </button>
+                                <button style="margin-left: 5px;margin-right: 5px;" (click)="removeStep(step)" class="btn btn-sm btn-danger ">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          
+            </div>
+            
+        </div>
+   
+    </div>
+</div>

@@ -1,0 +1,88 @@
+
+<app-createConditional #conditionals></app-createConditional>
+
+<div>
+
+
+    <app-title-page [title]="'FLUJOS'" [route]="'create'"></app-title-page>
+
+    <div class="row" >
+        <div class="col-12" *ngFor="let flow of flows">
+            <div class="card">
+                <div class="pagetitle">
+                    <div class="row">
+                        <div class="col-4">
+                            <h2 style="margin-left: 10px;">Nombre: {{flow.flowName}}</h2>
+                        </div>
+                        <div class="col-8">
+                            <div class="float-end">
+                                <!--<button class="btn btn-sm btn-secondary ">
+                                    <i class="fa-solid fa-diagram-project"></i>
+                                </button>
+                                <a [routerLink]="['/Flow/Create', flow.id]" class="btn btn-sm btn-link">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>!-->
+                                <button class="btn btn-sm btn-danger" (click)="deleteFlow(flow)">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-12"><hr></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="#" style="margin-left:10px;">Modulo: <label>{{flow.product?.module?.name}}</label></a>
+                        </div>
+                        <div class="col-3">
+                            <a href="#" style="margin-left:10px;">Producto: <label>{{flow.product?.name}}</label></a>
+                        </div>
+                     
+                        <div class="col-6">
+                            <span>Descripcion: <label> {{flow.description}}</label></span>
+                        </div>
+                    </div>
+                </div>
+
+                <table [class]="'table table-hover' + flow.showSteps">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Paso del Flujo</th>
+                            <th scope="col">Etapa</th>
+                            <th scope="col">Area</th>
+                            <th scope="col">SLA (horas)</th>
+                            <th scope="col">Proximo Paso</th>
+                            <th scope="col">Comentario</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let step of flow.flowSteps let i = index">
+                            <td scope="row">{{i+1}}</td>
+                            <td>{{step.referenceName}}</td>
+                            <td>{{step.step?.name}}</td>
+                            <td>{{step.step?.area?.name}}</td>
+                            <td>{{step.step?.sla}}</td>
+                            <td>{{(step.nextFlowStep?.referenceName ?? "FINALIZADO")}}</td>
+                            <td>
+                                <textarea rows="1" class="form-control form-control-sm" 
+                                [value]="step.comments" readonly></textarea>
+                            </td>
+                            <td>
+                                <a (click)="openConditions(step,flow.flowSteps)" class="btn btn-sm" ngbTooltip="Condicionales">
+                                    <span class="material-icons">
+                                        settings
+                                    </span>
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+

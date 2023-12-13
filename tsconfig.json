@@ -4,6 +4,19 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths":{
+      "@share/*":["src/app/appModules/shareModule/*"],
+      "@field/*":["src/app/appModules/fieldModule/*"],
+      "@form/*":["src/app/appModules/formDocumentModule/*"],
+      "@step/*":["src/app/appModules/stepModule/*"],
+      "@flow/*":["src/app/appModules/flowModule/*"],
+      "@api/*":["src/app/appModules/apiModule/*"],
+      "@attachment/*":["src/app/appModules/attachmentModule/*"],
+      "@conditional/*":["src/app/appModules/conditionalModule/*"],
+      "@template/*":["src/app/appModules/templateModule/*"],
+
+
+    },
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "noImplicitOverride": true,
@@ -29,5 +42,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+ 
 }

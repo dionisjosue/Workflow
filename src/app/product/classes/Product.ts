@@ -1,5 +1,5 @@
-import { Module } from "src/app/module/Classes/Module";
-import { BaseEntity } from "../../Commons/classes/BaseEntity";
+import { BaseEntity } from "@share/classes/BaseEntity";
+import { Module } from "src/app/module/Module";
 
 export class Product extends BaseEntity<number>{
 

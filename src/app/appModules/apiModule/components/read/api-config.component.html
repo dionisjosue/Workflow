@@ -1,0 +1,57 @@
+<div class="card">
+
+   <!-- <app-detail-api-config #detailApiItm></app-detail-api-config>
+
+    <app-conditional-api #conditionalsApi></app-conditional-api>!-->
+    <app-json-visor #jsonVisor  [data]="currentJson"></app-json-visor>
+    <app-title-page [title]="'API CONFIGURACIONES'" [route]="'create'"></app-title-page>
+    <app-detail-api-config #detailApiComponent [currentItem]="selected"></app-detail-api-config>
+
+    <div class="card-body">
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Url</th>
+                        <th>Tipo</th>
+                        <th>Descripcion</th>
+                        <th>Json</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let api of apis let i = index">
+                        <td>{{api.name}}</td>
+                        <td>{{api.url}}</td>
+                        <td>{{api.httpMethodStr}}</td>
+                        <td>{{api.description}}</td>
+                        <td>
+                            <a  *ngIf="api.jsonBody" ngbTooltip="JSON BODY" class="btn btn-link btn-sm">
+                                <i (click)="showJson(api.jsonBody)" class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            <a  *ngIf="api.jsonResponse" ngbTooltip="JSON RESPONSE" class="btn btn-link btn-sm">
+                                <i  class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <button (click)="showConditionals(api)" class="btn btn-sm" ngbTooltip="Condicionales">
+                                <span class="material-icons">settings</span>
+                            </button>
+                            <a (click)="setCurrentItem(api)"  style="margin-right: 8px;" class="btn btn-link btn-sm" ngbTooltip="Detalles">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </a>
+                            <button  class="btn btn-sm btn-danger" ngbTooltip="ELIMINAR">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<router-outlet></router-outlet>

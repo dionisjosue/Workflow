@@ -1,0 +1,28 @@
+<div class="row" >
+
+    <div class="pagetitle">
+        <div class="row">
+            <div class="col-9"></div>
+            <div class="float-end col-3">
+                
+              <input accept=".json" (change)="uploadJson($event)" type="file" id="upload" hidden/>
+                <label for="upload" class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-upload "></i>
+                    {{fileUploaded}}</label>
+            </div>
+        </div>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col-12" *ngIf="propertyNames">
+                <form>
+                    <app-json-props [fields]="fields" [propertyInfo]="propertyNames"></app-json-props>
+                </form>
+            </div>
+        </div>
+      
+    </form>
+
+    <json-editor style="max-width: 97%;"   #jsonEditor [options]="editorOptions" [data]="data"></json-editor>
+
+</div>

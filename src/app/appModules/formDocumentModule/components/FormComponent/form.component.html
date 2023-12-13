@@ -1,0 +1,95 @@
+
+
+
+<div>
+
+    <app-alert-dialog #dialog [inputs]="inputsDialog" ></app-alert-dialog>
+
+
+   <app-title-page [route]="'create'" [title]="'FORMULARIOS'"></app-title-page>
+    <hr>
+    
+    <div class="row" >
+        <div class="col-12" *ngFor="let form of forms">
+            <div class="card">
+                <br>
+                <div class="pagetitle">
+                    <div class="row">
+                        <div class="col-3">
+                            <span style="margin-left: 10px;">Nombre: <label>{{form.title}}</label></span>
+                        </div>
+                        <div class="col-4">
+                            <span>Descripcion: <label> {{form.description}}</label></span>
+                        </div>
+                        <div class="col-2">
+                            <span>Status: <label> {{form.active ? 'Activo' : 'Desactivado'}}</label></span>
+                        </div>
+                        <div class="col-3">
+                            <div class="float-end">
+                                <a ngbTooltip="Editar Formulario" class="btn btn-link">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="disableForm(form)" ngbTooltip="Cambiar Status" [class]="'btn btn-sm ' + (form.active ? 'btn-danger' : 'btn-success') " style="margin-right: 10px;">
+                                    <i [class]="form.active ? 'fa-regular fa-trash-can' : 'fa-solid fa-plus'"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-12"><hr></div>
+
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <div class="pagetitle" style="margin-left: 10px;">
+                                    <h2>ETAPAS</h2>
+                                </div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Nombre</th>
+                                      <th>Area</th>
+                                      <th>SLA</th>
+                                      <th>Status</th>
+                                      <th>Creado Por</th>
+                                      <th>Fecha</th>
+                                      <th>Ultima Mod.</th>
+                                      <th>Acciones</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let step of form.formSteps">
+                                      <td>{{step.step?.name}}</td>
+                                      <td>{{step.step?.area?.name}}</td>
+                                      <td>{{step.step?.sla}}</td>
+                                      <td>{{step.active ? 'Activo' : 'Desactivado'}}</td>
+                                      <td>{{step.createdBy}}</td>
+                                      <td>{{step.createdDate | date}}</td>
+                                      <td>{{step.lastModifiedDate | date}}</td>
+
+
+                                      <td>
+                                        <button ngbTooltip="Cambiar Status" 
+                                        (click)="changeStatus(step)" style="margin-right: 5px;" [class]="'btn btn-sm ' + (step.active ? 'btn-danger' : 'btn-success') " >
+                                          <i [class]="step.active ? 'fa-regular fa-trash-can' : 'fa-solid fa-plus'"></i>
+                                        </button>
+                  
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <br>
+        </div>
+   
+    </div>
+
+
+
+
+
+</div>

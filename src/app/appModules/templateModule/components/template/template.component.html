@@ -1,0 +1,149 @@
+<div>
+    <app-alert-dialog #dialog [inputs]="dialogData" ></app-alert-dialog>
+
+    <app-title-page [route]="'create'" [title]="'DOCUMENTOS DESCARGABLES'"></app-title-page>
+
+
+    <div class="card" *ngFor="let doc of documents">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div *ngIf="!doc.editMode" class="pagetitle">
+                        <h3 >{{doc.name}}</h3>
+                    </div>
+                    <div class="form-group mb-3 col-12" style="margin-top: 10px;">
+                        <input *ngIf="doc.editMode" class="form form-control form-control-sm" [(ngModel)]="doc.name">
+                    </div>
+
+                </div>
+                <div class="col-9">
+                    <div class="float-end" style="margin-top: 5px;margin-bottom: 5px;">
+                        <button *ngIf="!doc.editMode" (click)="editMode(doc)" class="btn btn-secundary btn-sm" type="button" ngbTooltip="ACTUALIZAR DATOS">
+                            <span class="material-icons" style="font-size: 16px;">edit</span>
+                        </button>
+                        <div *ngIf="doc.editMode" >
+                            <button style="margin-right: 10px;" (click)="saveData(doc)" class="btn btn-success btn-sm" type="button" ngbTooltip="GUARDAR DATOS">
+                                <span class="material-icons" style="font-size: 16px;">save</span>
+                            </button>
+
+                            <button (click)="editMode(doc)" class="btn btn-danger btn-sm" type="button" ngbTooltip="CANCELAR DATOS">
+                                <span class="material-icons" style="font-size: 16px;">cancel</span>
+                            </button>
+
+                        </div>
+                      
+                    </div>
+                </div>
+            
+                <hr/>
+                <div class="col-12">
+
+             
+                    <div  style="margin-left: 10px;">
+                        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                            <li (click)="doc.showSteps = !doc.showSteps; doc.showVisor = false;" class="nav-item flex-fill" role="presentation">
+                                <button [class]="'nav-link w-100 ' + {active:doc.showSteps}" id="step-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#bordered-justified-steps" type="button" role="tab" aria-controls="home"
+                                    [ariaSelected]="doc.showSteps">ETAPAS
+                                </button>
+                            </li>
+                            <li (click)="onVisor(doc)" class="nav-item flex-fill" role="presentation">
+                                <button [class]="'nav-link w-100 '+ {active:doc.showVisor}" id="profile-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" 
+                                    [ariaSelected]="doc.showVisor">TEMPLATE
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div *ngIf="doc.showSteps" class="table-responsive" id="bordered-justified-steps" role="tabpanel" aria-labelledby="step-tab">
+                       
+                        <br>
+                        <ng-select *ngIf="doc.editMode" bindLabel="name" 
+                        bindValue="id" [(ngModel)]="doc.stepsId" [items]="steps" [multiple]="true" (add)="addToList($event,doc)" (remove)="removeToList($event,doc)"
+                            (clear)="removeAll(doc)"></ng-select>
+                        <br>
+
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Area</th>
+                                    <th>SLA</th>
+                                    <th>Creado Por</th>
+                                    <th>Fecha</th>
+                                    <th>Ultima Mod.</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let step of doc.stepToShow">
+                                    <td>{{step.step?.name}}</td>
+                                    <td>{{step.step?.area?.name}}</td>
+                                    <td>{{step.step?.sla}}</td>
+                                    <td>{{step.step.createdBy}}</td>
+                                    <td>{{step.createdDate | date}}</td>
+                                    <td>{{step.lastModifiedDate | date}}</td>
+                                <td>
+                                    <button *ngIf="doc.editMode" ngbTooltip="Cambiar Status" 
+                                    (click)="changeStatus(step)" style="margin-right: 5px;" [class]="'btn btn-sm ' + (step.active ? 'btn-danger' : 'btn-success') " >
+                                    <i [class]="step.active ? 'fa-regular fa-trash-can' : 'fa-solid fa-plus'"></i>
+                                    </button>
+            
+                                </td>
+                            </tr>
+                             
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pdf-container" *ngIf="doc.showVisor">
+                        <div class="row">
+                            <div class="col-6">
+                              <img [src]="doc.imageUrl" class="img-fluid" alt="Document Image">
+                            </div>
+                          
+                            <div class="col-6">
+                                <div class="row ">
+                                    <div class="col-6">
+                                        <div class="pagetitle" >
+                                            <h4>COMODIN</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="pagetitle" >
+                                            <h4>CAMPO</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" *ngFor="let field of doc.fields">
+                                    <div class="col-6">
+                                        <div >
+                                            <input [disabled]="true" [value]="field.comodin" class="form-control form-control-sm mb-2">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <ng-select (ngModelChange)="onChangeField($event,field)" [disabled]="!doc.editMode" [(ngModel)]="field.fieldFk" bindLabel="name" bindValue="id" [items]="fields">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                             
+                            </div>
+
+                       
+                         
+                          </div>
+                  
+                    </div>
+                 
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

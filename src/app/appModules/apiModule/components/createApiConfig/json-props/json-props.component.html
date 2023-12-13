@@ -1,0 +1,40 @@
+
+
+<div class="col-11">
+
+  <div class="col-12" [ngClass]="{'node':validateCanDisplay(propertyInfo)}">
+
+    <div [ngClass]="{'node-content':validateCanDisplay(propertyInfo)}">
+   
+      <div  *ngIf="validateCanDisplay(propertyInfo)">
+        <label>{{propertyInfo.propName}}</label>
+        
+        <select [(ngModel)]="propertyInfo.fieldMapped" 
+        (change)="refreshData($event,propertyInfo)" required class="form-select">
+          <option [value]="0" selected>Seleccionar</option>
+          <option *ngFor="let fd of fields" [value]="fd.id">{{fd.name}}</option>
+        </select>
+        <!--
+        <ng-select  [(ngModel)]="propertyInfo.fieldMapped"
+          [selectOnTab]="true" [items]="fields" (change)="setValue($event,propertyInfo)"
+          [addTag]="false" [multiple]="false" 
+          bindLabel="name" 
+          bindValue="id"> 
+          </ng-select>-->
+      </div>
+      <div class="col-12" *ngIf="propertyInfo.type === 'object' && propertyInfo.children">
+        <div class="col-12" *ngFor="let child of propertyInfo.children">
+          <app-json-props  [fields]="fields" [propertyInfo]="child"></app-json-props>
+        </div>
+      </div>
+      <div *ngIf="propertyInfo.type === 'array' && propertyInfo.children">
+        <div *ngFor="let item of propertyInfo.children">
+          <app-json-props  [fields]="fields" [propertyInfo]="item"></app-json-props>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+

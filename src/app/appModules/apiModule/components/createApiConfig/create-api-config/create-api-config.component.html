@@ -1,0 +1,87 @@
+
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+ 
+  <app-alert-dialog #dialog (close)="onCloseValidate()" [inputs]="saveResult"></app-alert-dialog>
+  <div class="card">
+    <div class="card-body">
+
+    <div class="pagetitle">
+
+        <div class="row">
+            <div class="col-9">
+                    <div class="col-">
+                        <h2>
+                                API CONFIGURACIONES
+                            <a class="btn btn-sm btn-link"></a>
+                        </h2>
+                    </div>
+                
+            </div>
+            <div class="col-3">
+                <h2 class="float-end">
+                    <button [disabled]="!dataValid"  (click)="saveData()" class="btn btn-sm btn-success">
+                        <i class="fa fa-save"></i>
+                        GUARDAR
+                    </button>
+                </h2>
+            </div>
+        </div>
+        <br/>
+    
+    </div>
+
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="input-group mb-3 col-2">
+                    <span class="input-group-text col-2" id="basic-addon1">
+                        <select formControlName="httpMethod" class="form-select form-control form-control-sm col-1">
+                            <option value="1" class="option-green">
+                                GET
+                            </option>
+                            <option value="2">POST</option>
+                            <option value="3">PUT</option>
+                            <option value="5">DELETE</option>
+                        </select>
+                    </span>
+                
+                    <span class="input-group-text col-10">
+                        <input formControlName="url" type="text" class="form-control" value="null"
+                        aria-describedby="basic-addon1" placeholder="Enter URL or paste the text">
+                    </span>
+                    <span class="col-2" style="margin: 0;padding: 0;">
+                        <app-error-message [control]="gethttpMethod" controlName="httpMethod"></app-error-message>
+                    </span>
+                    <span class="col-10" style="margin: 0;padding: 0;">
+                        <app-error-message [control]="getUrl" controlName="url"></app-error-message>
+                    </span>
+
+                </div>
+                <div class="input-group mb-3 col-2">
+                    <span class="input-group-text col-6">
+                        <input formControlName="name" class="form-control" placeholder="Nombre" />
+                    </span>
+                    <span class="input-group-text col-6">
+                        <input formControlName="description" class="form-control" placeholder="Descripcion" />
+                    </span>
+                    <span class="col-6" style="margin: 0;padding: 0;">
+                        <app-error-message [control]="getName" controlName="name"></app-error-message>
+                    </span>
+
+                </div>
+           
+
+            </div>
+          
+        </form>
+        <app-api-nav-tab></app-api-nav-tab>
+
+        <router-outlet></router-outlet>
+
+
+    </div>
+
+</div>

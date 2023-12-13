@@ -36,12 +36,10 @@
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
     "material-icons": "^1.13.11",
-    "ngx-editor": "^16.0.1",
-    "ngx-lottie": "^10.0.0",
-    "ngx-quill": "^22.1.0",
     "rxjs": "~7.5.0",
     "tinymce": "^6.7.0",
     "tslib": "^2.3.0",
+    "vanilla-jsoneditor": "^0.20.0",
     "zone.js": "~0.13.1"
   },
   "devDependencies": {
